@@ -28,7 +28,9 @@ function Navbar() {
                     Trainings
                 </Link>
 
-                <Link to="/calendar">Calendar</Link>
+                <Link to="/calendar" style={{ color: 'black', textDecoration: 'none' }}>
+                    Calendar
+                </Link>
             </div>
         </nav>
     );
