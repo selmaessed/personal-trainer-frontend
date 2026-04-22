@@ -27,6 +27,8 @@ function Navbar() {
                 >
                     Trainings
                 </Link>
+
+                <Link to="/calendar">Calendar</Link>
             </div>
         </nav>
     );

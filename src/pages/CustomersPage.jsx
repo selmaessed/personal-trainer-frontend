@@ -128,6 +128,43 @@ function CustomersPage() {
         }
     };
 
+    const handleExportCSV = () => {
+        const headers = [
+            'First name',
+            'Last name',
+            'Street address',
+            'Postcode',
+            'City',
+            'Email',
+            'Phone',
+        ];
+
+        const rows = customers.map((customer) => [
+            customer.firstname,
+            customer.lastname,
+            customer.streetaddress,
+            customer.postcode,
+            customer.city,
+            customer.email,
+            customer.phone,
+        ]);
+
+        const csvContent = [
+            headers.join(','),
+            ...rows.map((row) => row.map((value) => `"${value}"`).join(',')),
+        ].join('\n');
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'customers.csv');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     const filteredCustomers = customers
         .filter((customer) => {
             const searchValue = searchTerm.trim().toLowerCase();
@@ -159,20 +196,26 @@ function CustomersPage() {
         <div>
             <h1>Customers</h1>
 
-            <button
-                onClick={() => {
-                    if (showForm && !editingCustomerUrl) {
-                        handleCancelForm();
-                    } else {
-                        setShowForm(true);
-                        setEditingCustomerUrl(null);
-                        setCustomerForm(emptyCustomer);
-                    }
-                }}
-                style={primaryButtonStyle}
-            >
-                {showForm && !editingCustomerUrl ? 'Cancel' : 'Add customer'}
-            </button>
+            <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+                <button
+                    onClick={() => {
+                        if (showForm && !editingCustomerUrl) {
+                            handleCancelForm();
+                        } else {
+                            setShowForm(true);
+                            setEditingCustomerUrl(null);
+                            setCustomerForm(emptyCustomer);
+                        }
+                    }}
+                    style={primaryButtonStyle}
+                >
+                    {showForm && !editingCustomerUrl ? 'Cancel' : 'Add customer'}
+                </button>
+
+                <button onClick={handleExportCSV} style={exportButtonStyle}>
+                    Export CSV
+                </button>
+            </div>
 
             {showForm && (
                 <form
@@ -363,9 +406,17 @@ const inputStyle = {
 };
 
 const primaryButtonStyle = {
-    marginBottom: '20px',
     padding: '10px 16px',
     backgroundColor: '#1976d2',
+    color: 'white',
+    border: 'none',
+    cursor: 'pointer',
+    borderRadius: '4px',
+};
+
+const exportButtonStyle = {
+    padding: '10px 16px',
+    backgroundColor: '#5cb85c',
     color: 'white',
     border: 'none',
     cursor: 'pointer',
