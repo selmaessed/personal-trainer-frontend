@@ -28,7 +28,10 @@ function Navbar() {
                     Trainings
                 </Link>
 
-                <Link to="/calendar" style={{ color: 'black', textDecoration: 'none' }}>
+                <Link
+                    to="/calendar"
+                    style={{ color: 'white', textDecoration: 'none', fontWeight: 'bold' }}
+                >
                     Calendar
                 </Link>
             </div>
