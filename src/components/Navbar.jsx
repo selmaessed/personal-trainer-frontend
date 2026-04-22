@@ -34,6 +34,13 @@ function Navbar() {
                 >
                     Calendar
                 </Link>
+
+                <Link
+                    to="/statistics"
+                    style={{ color: 'white', textDecoration: 'none', fontWeight: 'bold' }}
+                >
+                    Statistics
+                </Link>
             </div>
         </nav>
     );
